@@ -76,10 +76,9 @@ app.delete('/api/deletar/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Erro ao deletar a categoria' });
     }
-
-
 });
 
+//E la vamos nos!
 // Inicia o servidor na porta 3000
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
