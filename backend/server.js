@@ -2,9 +2,17 @@ const express = require('express'); // Importa o Express
 const app = express(); // Cria uma aplicação Express
 const pool = require('./bd')
 require('dotenv').config();
+const path = require('path');
+const cors = require('cors');
+
 
 // Servir arquivos estáticos da pasta "public"
-app.use(express.static('public'));
+// app.use(express.static('public'));
+
+// Servir arquivos estáticos da pasta "frontend"
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+app.use(cors());
 
 //Converte os dados que chegam em Json
 app.use(express.json())
