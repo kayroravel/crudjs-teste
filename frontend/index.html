@@ -1,22 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Categorias</title>
 </head>
+
 <body>
 
 
     <h1>Cadastra Categorias</h1>
 
-    
+
     <form action="cadastrarCategorias">
         <input type="text" placeholder="Nome da Categoria"><br>
         <input type="text" placeholder="Descrição da Categorias"><br>
 
-        <button type="submit"></button>
+        <button type="submit">Cadastrar</button>
     </form>
 
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form[action="cadastrarCategorias"]');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Impede o envio padrão do formulário
+
+                const inputs = form.querySelectorAll('input');
+                const nome = inputs[0].value.trim();
+                const descricao = inputs[1].value.trim();
+
+                const payload = {
+                    nome,
+                    descricao
+                };
+
+                try {
+                    // const response = await fetch('http://localhost:3000/api/', {
+                    const response = await fetch('https://crudjs-teste.onrender.com/api/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        alert('Categoria cadastrada com sucesso!');
+                        console.log('Resposta do servidor:', result);
+                        form.reset();
+                    } else {
+                        const error = await response.text();
+                        alert('Erro ao cadastrar categoria: ' + error);
+                    }
+                } catch (err) {
+                    console.error('Erro de conexão:', err);
+                    alert('Erro de rede ou servidor indisponível.');
+                }
+            });
+        });
+    </script>
 </body>
+
+
 </html>
